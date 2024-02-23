@@ -1,0 +1,77 @@
+{
+  "Version": 1,
+  "Hash": "Pybp5Z6ReXgeTVHTNrYwKdTmwFMINfi0TAPlS01VSes=",
+  "Source": "MyWebApi",
+  "BasePath": "_content/MyWebApi",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [
+    {
+      "Name": "MyWebApi\\wwwroot",
+      "Source": "MyWebApi",
+      "ContentRoot": "C:\\Users\\actio\\CIS215_A2\\MyWebApi\\wwwroot\\",
+      "BasePath": "_content/MyWebApi",
+      "Pattern": "**"
+    }
+  ],
+  "Assets": [
+    {
+      "Identity": "C:\\Users\\actio\\CIS215_A2\\MyWebApi\\wwwroot\\server_A2.css",
+      "SourceId": "MyWebApi",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\actio\\CIS215_A2\\MyWebApi\\wwwroot\\",
+      "BasePath": "_content/MyWebApi",
+      "RelativePath": "server_A2.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\server_A2.css"
+    },
+    {
+      "Identity": "C:\\Users\\actio\\CIS215_A2\\MyWebApi\\wwwroot\\server_A2.html",
+      "SourceId": "MyWebApi",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\actio\\CIS215_A2\\MyWebApi\\wwwroot\\",
+      "BasePath": "_content/MyWebApi",
+      "RelativePath": "server_A2.html",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\server_A2.html"
+    },
+    {
+      "Identity": "C:\\Users\\actio\\CIS215_A2\\MyWebApi\\wwwroot\\server_A2.js",
+      "SourceId": "MyWebApi",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\actio\\CIS215_A2\\MyWebApi\\wwwroot\\",
+      "BasePath": "_content/MyWebApi",
+      "RelativePath": "server_A2.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\server_A2.js"
+    }
+  ]
+}
