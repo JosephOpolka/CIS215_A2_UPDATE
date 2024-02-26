@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Trip Database</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="server_A2.css">
+    </head>
+    <body>
+            <div class="top">
+                <h1>Trip Database Manager</h1>
+                <div class="section">
+                    <h2>Results</h2>
+                    <div id="successMessage" style="display: none;"></div>
+                </div>
+            </div>
+        <div class="bottom_half">
+            <div class="actions">
+                <div class="section">
+                    <h2>Add Entry</h2>
+                    <label for="add_drop">Select Table - </label>
+                    <select id="add_drop">
+                        <option id="driver">Drivers</option>
+                        <option id="vehicle">Vehicles</option>
+                        <option id="passenger">Passengers</option>
+                        <option id="trip">Trips</option>
+                    </select>
+
+                    <form id="add_entry_Drivers">
+                        <p>Add Driver - </p>
+                        <label for="driver_first_name">First Name - </label>
+                        <input type="text" id="driver_first_name" name="">
+                        <label for="driver_middle_name">Middle Name - </label>
+                        <input type="text" id="driver_middle_name" name="">
+                        <label for="driver_last_name">Last Name - </label>
+                        <input type="text" id="driver_last_name" name="">
+                        <label for="driver_dob">DOB - </label>
+                        <input type="text" id="driver_dob" name="">
+                        <label for="driver_address_street">Street Address - </label>
+                        <input type="text" id="driver_address_street" name="">
+                        <label for="driver_address_zip">ZIP - </label>
+                        <input type="text" id="driver_address_zip" name="">
+                        <label for="driver_license_number">License Number - </label>
+                        <input type="text" id="driver_license_number" name="">
+                        <button id="">Submit</button>
+                    </form>
+                    <form id="add_entry_Vehicles">
+                        <p>Add Vehicle - </p>
+                        <label for="vehicle_start_miles">Starting Mileage - </label>
+                        <input type="text" id="vehicle_start_miles" name="">
+                        <label for="vehicle_end_miles">Ending Mileage - </label>
+                        <input type="text" id="vehicle_end_miles" name="">
+                        <label for="vehicle_start_fuel">Starting Fuel - </label>
+                        <input type="text" id="vehicle_start_fuel" name="">
+                        <label for="vehicle_end_fuel">Ending Fuel - </label>
+                        <input type="text" id="vehicle_end_fuel" name="">
+                        <label for="vehicle_start_condition">Starting Condition - </label>
+                        <input type="text" id="vehicle_start_condition" name="">
+                        <label for="vehicle_end_condition">Ending Condition - </label>
+                        <input type="text" id="vehicle_end_condition" name="">
+                        <label for="vehicle_issues">Issues - </label>
+                        <input type="text" id="vehicle_issues" name="">
+                        <label for="vehicle_reason_for_trip">Reason for Trip - </label>
+                        <input type="text" id="vehicle_reason_for_trip" name="">
+                        <button id="">Submit</button>
+                    </form>
+                    <form id="add_entry_Passengers">
+                        <p>Add Passenger - </p>
+                        <label for="passenger_first_name">First Name - </label>
+                        <input type="text" id="passenger_first_name" name="">
+                        <label for="passenger_middle_name">Middle Name - </label>
+                        <input type="text" id="passenger_middle_name" name="">
+                        <label for="passenger_last_name">Last Name - </label>
+                        <input type="text" id="passenger_last_name" name="">
+                        <label for="passenger_dob">DOB - </label>
+                        <input type="text" id="passenger_dob" name="">
+                        <label for="passenger_address_street">Street Address - </label>
+                        <input type="text" id="passenger_address_street" name="">
+                        <label for="passenger_address_zip">ZIP - </label>
+                        <input type="text" id="passenger_address_zip" name="">
+                        <button id="">Submit</button>
+                    </form>
+                    <form id="add_entry_Trips">
+                        <p>Add Trip - </p>
+                        <label for="trip_destination_address">Destination Address - </label>
+                        <input type="text" id="trip_destination_address" name="">
+                        <label for="trip_destination_zip">Destination ZIP - </label>
+                        <input type="text" id="trip_destination_zip" name="">
+                        <label for="trip_to_date">Trip Start Date - </label>
+                        <input type="text" id="trip_to_date" name="">
+                        <label for="trip_to_start_time">Trip Start Time - </label>
+                        <input type="text" id="trip_to_start_time" name="">
+                        <label for="trip_to_arrival_time">Trip Arrival Time - </label>
+                        <input type="text" id="trip_to_arrival_time" name="">
+                        <label for="trip_back_date">Trip Return Date - </label>
+                        <input type="text" id="trip_back_date" name="">
+                        <label for="trip_back_start_time">Trip Return Start Time - </label>
+                        <input type="text" id="trip_back_start_time" name="">
+                        <label for="trip_back_arrival_time">Trip Return Arrival Time - </label>
+                        <input type="text" id="trip_back_arrival_time" name="">
+                        <label for="trip_vehicle_id">Vehicle ID - </label>
+                        <input type="text" id="trip_vehicle_id" name="">
+                        <label for="trip_driver_id">Driver ID - </label>
+                        <input type="text" id="trip_driver_id" name="">
+                        <label for="trip_passenger_id">Passenger ID - </label>
+                        <input type="text" id="trip_passenger_id" name="">
+                        <button id="">Submit</button>
+                    </form>
+                </div>
+
+                <div class="section">
+                    <h2>Delete Entry</h2>
+                    <label for="delete_drop">Select Table - </label>
+                    <select id="delete_drop">
+                        <option id="delete_opt_driver">Drivers</option>
+                        <option id="delete_opt_vehicle">Vehicles</option>
+                        <option id="delete_opt_passenger">Passengers</option>
+                        <option id="delete_opt_trip">Trips</option>
+                    </select>
+
+                    <form id="delete_entry">
+                        <label for="delete_id">ID - </label>
+                        <input type="text" id="delete_id" name="">
+                        <button id="">Submit</button>
+                    </form>
+                </div>
+
+                <div class="section">
+                    <h2>Query Database</h2>
+                    <form id="query">
+                        <label for=""></label>
+                        <input type="text" id="" name="">
+                        <button id="">Submit</button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>Tables</h2>
+                <label for="table_drop">Select Table - </label>
+                <select id="table_drop">
+                    <option id="drivers">Drivers</option>
+                    <option id="vehicles">Vehicles</option>
+                    <option id="passengers">Passengers</option>
+                    <option id="trips">Trips</option>
+                </select>
+                <div class="table_display"></div>
+            </div>
+        </div>
+        <script src="server_A2.js"></script>
+    </body>
+</html>
