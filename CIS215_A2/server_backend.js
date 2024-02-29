@@ -1,12 +1,18 @@
 const express = require('express');
 const sqlite3 = require('sqlite3').verbose();
 const bodyParser = require('body-parser');
+const cors = require('cors');
 
-// express app
 const app = express();
 
 // parses json requests
 app.use(bodyParser.json());
+
+/*app.use(cors({
+    origin: 'http://localhost:8080',
+    methods: 'GET,POST',
+    allowedHeaders: "Content-Type,Authorization",
+}));*/
 
 // connection to car-trips.db
 const db = new sqlite3.Database('car-trips.db', sqlite3.OPEN_READWRITE, (err) => {
@@ -67,6 +73,11 @@ app.get('/api/trips', (req, res) => {
         res.json(rows);
     });
 });
+
+// MAIN ISSUES:
+// Origin is null, origin must be http://localhost:3000
+// CORS Blocking requests
+// Origin is on C drive, not http://localhost:3000
 
 const PORT = 3000;
 // starts server

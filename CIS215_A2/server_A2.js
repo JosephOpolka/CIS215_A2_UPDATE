@@ -1,4 +1,14 @@
 document.addEventListener("DOMContentLoaded", function () {
+
+    function resultsDisplay(result) {
+        var successMessage = document.getElementById("successMessage");
+        successMessage.textContent = result;
+        successMessage.style.display = "block";
+        setTimeout(function () {
+            successMessage.style.display = "none";
+        }, 2500);
+    }
+
     function showSelectedForm() {
         var selectedOption = document.getElementById("add_drop").value;
         console.log("Selected Option = ", selectedOption);
@@ -15,6 +25,7 @@ document.addEventListener("DOMContentLoaded", function () {
         if (selectedForm) {
             selectedForm.style.display = 'grid';
         }
+        resultsDisplay("Add Entry: table selected");
     }
 
     // Add event listener to the dropdown
@@ -24,24 +35,28 @@ document.addEventListener("DOMContentLoaded", function () {
     // Call the function initially to show the appropriate form based on the default selection
     showSelectedForm();
 
-
+    
 
     function fetchData(endpoint) {
-        return fetch(endpoint).then(response => {
+        fetch('/api/drivers') // Make an HTTP GET request to the backend API endpoint
+        .then(response => {
             if (!response.ok) {
-                throw new Error("Network response was not ok");
+                throw new Error('Network response was not ok');
             }
-            console.log(response);
-            return response.json();
+            return response.json(); // Parse the JSON data
+        })
+        .then(data => {
+            // Process the JSON data received from the server
+            console.log(data); // Display the data in the browser console
+            // Further processing or rendering of the data in the UI
         })
         .catch(error => {
-            console.error('Error fetching data: ', error);
+            console.error('Error fetching data:', error); // Handle any errors that occur during the fetch
         });
     }
 
-    fetchData();
-
-
+    //fetchData("http://localhost:3000/api/drivers");
+    fetchData("");
 
     function showTheTable() {
         const tableDrop = document.getElementById('table_drop');
