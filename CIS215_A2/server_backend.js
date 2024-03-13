@@ -8,11 +8,7 @@ const app = express();
 // parses json requests
 app.use(bodyParser.json());
 
-/*app.use(cors({
-    origin: 'http://localhost:8080',
-    methods: 'GET,POST',
-    allowedHeaders: "Content-Type,Authorization",
-}));*/
+app.use(cors());
 
 // connection to car-trips.db
 const db = new sqlite3.Database('car-trips.db', sqlite3.OPEN_READWRITE, (err) => {
@@ -22,8 +18,6 @@ const db = new sqlite3.Database('car-trips.db', sqlite3.OPEN_READWRITE, (err) =>
         console.log('Connected to car-trips.db successfully!');
     }
 });
-
-
 
 // route to fetch data from car-trips
 app.get('/api/drivers', (req, res) => {
