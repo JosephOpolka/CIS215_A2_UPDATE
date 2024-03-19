@@ -42,7 +42,7 @@
                         <input type="text" id="driver_address_zip" name="">
                         <label for="driver_license_number">License Number - </label>
                         <input type="text" id="driver_license_number" name="">
-                        <button id="">Submit</button>
+                        <button id="add_submit_Drivers">Submit</button>
                     </form>
                     <form id="add_entry_Vehicles">
                         <p>Add Vehicle - </p>
@@ -62,7 +62,7 @@
                         <input type="text" id="vehicle_issues" name="">
                         <label for="vehicle_reason_for_trip">Reason for Trip - </label>
                         <input type="text" id="vehicle_reason_for_trip" name="">
-                        <button id="">Submit</button>
+                        <button id="add_submit_Vehicles">Submit</button>
                     </form>
                     <form id="add_entry_Passengers">
                         <p>Add Passenger - </p>
@@ -78,7 +78,7 @@
                         <input type="text" id="passenger_address_street" name="">
                         <label for="passenger_address_zip">ZIP - </label>
                         <input type="text" id="passenger_address_zip" name="">
-                        <button id="">Submit</button>
+                        <button id="add_submit_Passengers">Submit</button>
                     </form>
                     <form id="add_entry_Trips">
                         <p>Add Trip - </p>
@@ -104,7 +104,7 @@
                         <input type="text" id="trip_driver_id" name="">
                         <label for="trip_passenger_id">Passenger ID - </label>
                         <input type="text" id="trip_passenger_id" name="">
-                        <button id="">Submit</button>
+                        <button id="add_submit_Trips">Submit</button>
                     </form>
                 </div>
 
@@ -118,23 +118,96 @@
                         <option id="delete_opt_trip">Trips</option>
                     </select>
 
+                    <p>Deleting Entry - </p>
                     <form id="delete_entry">
                         <label for="delete_id">ID - </label>
                         <input type="text" id="delete_id" name="">
-                        <button id="">Submit</button>
+                        <button id="delete_submit">Submit</button>
                     </form>
                 </div>
 
+
+
                 <div class="section">
                     <h2>Query Database</h2>
+                    <p>Search Query</p>
                     <form id="query">
-                        <label for=""></label>
-                        <input type="text" id="" name="">
-                        <button id="">Submit</button>
+                        <label for="query_table">Tables -</label>
+                        <div class="input-group">
+                            <input type="checkbox" for="query_table">
+                            <select id="query_drop">
+                                <option id="d">Drivers</option>
+                                <option id="v">Vehicles</option>
+                                <option id="p">Passengers</option>
+                                <option id="t">Trips</option>
+                            </select>
+                        </div>
+                        
+                            <label for="query_id">Row (ID) -</label>
+                        <div class="input-group">
+                            <input type="checkbox" for="query_table">
+                            <input type="text" id="query_id" name="">
+                        </div>
+                        
+                            <label for="query_column">Column -</label>
+                        <div class="input-group">
+                            <input type="checkbox" for="query_table">
+                            
+                            <select id="query_column_Drivers">
+                                <option id="d_opt_fname">first_name</option>
+                                <option id="d_opt_mname">middle_name</option>
+                                <option id="d_opt_lname">last_name</option>
+                                <option id="d_opt_dob">dob</option>
+                                <option id="d_opt_street">address_street</option>
+                                <option id="d_opt_zip">address_zip</option>
+                                <option id="d_opt_license">license_number</option>
+                            </select>
+                            <select id="query_column_Vehicles">
+                                <option id="v_opt_smiles">start_miles</option>
+                                <option id="v_opt_emiles">end_miles</option>
+                                <option id="v_opt_sfuel">start_fuel</option>
+                                <option id="v_opt_efuel">end_fuel</option>
+                                <option id="v_opt_scondition">start_condition</option>
+                                <option id="v_opt_econdition">end_condition</option>
+                                <option id="v_opt_issue">issues</option>
+                                <option id="v_opt_reason">reason_for_trip</option>
+                                <option id="v_opt_oil">oil_change_needed</option>
+                            </select>
+                            <select id="query_column_Passengers">
+                                <option id="p_opt_fname">first_name</option>
+                                <option id="p_opt_mname">middle_name</option>
+                                <option id="p_opt_lname">last_name</option>
+                                <option id="p_opt_dob">dob</option>
+                                <option id="p_opt_street">address_street</option>
+                                <option id="p_opt_zip">address_zip</option>
+                            </select>
+                            <select id="query_column_Trips">
+                                <option id="t_opt_daddress">destination_address</option>
+                                <option id="t_opt_dzip">destination_zip</option>
+                                <option id="t_opt_todate">to_date</option>
+                                <option id="t_opt_tostime">to_start_time</option>
+                                <option id="t_opt_toatime">to_arrival_time</option>
+                                <option id="t_opt_bdate">back_date</option>
+                                <option id="t_opt_bstime">back_start_time</option>
+                                <option id="t_opt_batime">back_arrival_timw</option>
+                                <option id="t_opt_vid">vehicle_id</option>
+                                <option id="t_opt_did">driver_id</option>
+                                <option id="t_opt_pid">passenger_id</option>
+                            </select>
+                        </div>
+
+                            <label for="query_contain">Containing Text -</label>
+                        <div class="input-group">
+                            <input type="checkbox" for="query_table">
+                            <input type="text" id="query_contain" name="">
+                        </div>
+                        <button id="query_submit">Submit</button>
                     </form>
                 </div>
             </div>
 
+
+            
             <div class="section">
                 <h2>Tables</h2>
                 <label for="table_drop">Select Table - </label>

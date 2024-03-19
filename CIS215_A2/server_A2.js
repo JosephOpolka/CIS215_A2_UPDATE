@@ -34,10 +34,108 @@ document.addEventListener("DOMContentLoaded", function () {
 
     showSelectedForm();
 
+    function showSelectedQueryForm() {
+        var selectedTable = document.getElementById("query_drop").value;
+        console.log("Selected Table = ", selectedTable);
+    
+        // Hide all column dropdowns
+        var columnDropdowns = document.querySelectorAll('[id^="query_column_"]');
+        columnDropdowns.forEach(function (dropdown) {
+            dropdown.style.display = 'none';
+        });
+        
+        // Show the selected column dropdown
+        var selectedColumnDropdown = document.getElementById('query_column_' + selectedTable);
+        console.log('Selected Column Dropdown:', selectedColumnDropdown);
+        if (selectedColumnDropdown) {
+            selectedColumnDropdown.style.display = 'block';
+        }
+    }
+    
+    // Add event listener to the Table dropdown
+    var queryTableDrop = document.getElementById("query_drop");
+    queryTableDrop.addEventListener("change", showSelectedQueryForm);
+    
+    showSelectedQueryForm(); 
+
+
 
     // BEGGINING OF DATA COLLECTION
 
 
+    // For adding table entries
+    function AddSubmit(event, table) {
+        event.preventDefault(); // Prevent default form submission behavior
+
+        // Extract the form data
+        const form = event.target.form;
+        console.log("form = " + form);
+        const formData = new FormData(form);
+        console.log("formData = " + formData);
+
+        formData.forEach((value, key) => {
+            // Log only specific key-value pairs
+            if (key === 'first_name' || key === 'last_name') {
+                console.log(`Entry Example = ${key}: ${value}`);
+            }
+        });
+
+        // form.json or something
+        // casting HTML instead of JSON
+
+        // Construct the data object
+        const data = {};
+        formData.forEach((value, key) => {
+            data[key] = value;
+        });
+
+        // Send the data to the backend endpoint for adding entry
+        fetch(`http://localhost:3000/api/add-${table.toLowerCase()}`, { // Construct the endpoint dynamically based on the table name
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data) // Pass the data directly without including the table name
+        })
+        .then(response => response.json())
+        .then(result => {
+            // Display success message
+            resultsDisplay("Add Entry: Entry into ${table} successful");
+            const successMessage = document.getElementById('successMessage');
+            successMessage.textContent = result.message;
+            successMessage.style.display = 'block';
+            
+            form.reset();
+        })
+        .catch(error => console.error('Error:', error));
+    }
+
+
+    document.getElementById('add_submit_Drivers').addEventListener('click', function(event) {
+        console.log("Add Driver has been clicked :D");
+        AddSubmit(event, 'Drivers');
+    });
+    
+    document.getElementById('add_submit_Vehicles').addEventListener('click', function(event) {
+        console.log("Add Vehicle has been clicked :D");
+        AddSubmit(event, 'Vehicles');
+    });
+    
+    document.getElementById('add_submit_Passengers').addEventListener('click', function(event) {
+        console.log("Add Passenger has been clicked :D");
+        AddSubmit(event, 'Passengers');
+    });
+    
+    document.getElementById('add_submit_Trips').addEventListener('click', function(event) {
+        console.log("Add Trip has been clicked :D");
+        AddSubmit(event, 'Trips');
+    });
+
+
+
+
+
+    // For displaying tables below
     function fetchData(endpoint) {
         return fetch(endpoint) // Make an HTTP GET request to the backend API endpoint
         .then(response => {
@@ -54,15 +152,6 @@ document.addEventListener("DOMContentLoaded", function () {
             console.error('Error fetching data:', error); // Handle any errors that occur during the fetch
         });
     }
-    
-
-
-    // Save Json data as alt variable of sorts in JavaScript
-    // think about asyncronous here
-    // Start small when displaying results
-    // Watch videos about JavaScript "Promises"
-    //
-    // RetrieveDrivers, get http request for driver data
 
     fetchData('http://localhost:3000/api/drivers');
 

@@ -68,10 +68,67 @@ app.get('/api/trips', (req, res) => {
     });
 });
 
-// MAIN ISSUES:
-// Origin is null, origin must be http://localhost:3000
-// CORS Blocking requests
-// Origin is on C drive, not http://localhost:3000
+
+
+app.post('/api/add-drivers', (req, res) => {
+    const data = req.body;
+
+    const query = 'INSERT INTO Drivers (first_name, middle_name, last_name, dob, address_street, address_zip, license_number) VALUES (?, ?, ?, ?, ?, ?, ?)';
+    const { first_name, middle_name, last_name, dob, address_street, address_zip, license_number } = data;
+
+    db.run(query, [first_name, middle_name, last_name, dob, address_street, address_zip, license_number], function(err) {
+        if (err) {
+            return res.status(500).json({ error: err.message });
+        }
+        res.json({ message: 'Driver added successfully', driver_id: this.lastID });
+    });
+});
+
+app.post('/api/add-vehicles', (req, res) => {
+    const data = req.body;
+
+    const query = 'INSERT INTO Vehicles (start_miles, end_miles, start_fuel, end_fuel, start_condition, end_condition, issues, reason_for_trip) VALUES (?, ?, ?, ?, ?, ?, ?, ?)';
+     
+    const { start_miles, end_miles, start_fuel, end_fuel, start_condition, end_condition, issues, reason_for_trip } = data;
+
+    db.run(query, [start_miles, end_miles, start_fuel, end_fuel, start_condition, end_condition, issues, reason_for_trip], function(err) {
+        if (err) {
+            return res.status(500).json({ error: err.message });
+        }
+        res.json({ message: 'Vehicle added successfully', vehicle_id: this.lastID });
+    });
+});
+
+app.post('/api/add-passengers', (req, res) => {
+    const data = req.body;
+
+    const query = 'INSERT INTO Passengers (first_name, middle_name, last_name, dob, address_street, address_zip ) VALUES (?, ?, ?, ?, ?, ?)';
+     
+    const { first_name, middle_name, last_name, dob, address_street, address_zip } = data;
+
+    db.run(query, [first_name, middle_name, last_name, dob, address_street, address_zip], function(err) {
+        if (err) {
+            return res.status(500).json({ error: err.message });
+        }
+        res.json({ message: 'Trips added successfully', passenger_id: this.lastID });
+    });
+});
+
+app.post('/api/add-trips', (req, res) => {
+    const data = req.body;
+
+    const query = 'INSERT INTO Trips ( destination_address, destination_zip, to_date, to_start_time, to_arrival_time, back_date, back_start_time, back_arrival_time, vehicle_id, driver_id, passenger_id ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
+    const { destination_address, destination_zip, to_date, to_start_time, to_arrival_time, back_date, back_start_time, back_arrival_time, vehicle_id, driver_id, passenger_id } = data;
+
+    db.run(query, [destination_address, destination_zip, to_date, to_start_time, to_arrival_time, back_date, back_start_time, back_arrival_time, vehicle_id, driver_id, passenger_id], function(err) {
+        if (err) {
+            return res.status(500).json({ error: err.message });
+        }
+        res.json({ message: 'Passenger added successfully', trip_id: this.lastID });
+    });
+});
+
+
 
 const PORT = 3000;
 // starts server
