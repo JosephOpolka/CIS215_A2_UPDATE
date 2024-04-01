@@ -28,7 +28,7 @@ document.addEventListener("DOMContentLoaded", function () {
         resultsDisplay("Add Entry: table selected");
     }
 
-    // Add event listener to the dropdown
+    // event listener for dropdown
     var tableDrop = document.getElementById("add_drop");
     tableDrop.addEventListener("change", showSelectedForm);
 
@@ -59,81 +59,235 @@ document.addEventListener("DOMContentLoaded", function () {
     showSelectedQueryForm(); 
 
 
-
     // BEGGINING OF DATA COLLECTION
 
+    //ADD ENTRY
 
-    // For adding table entries
-    function AddSubmit(event, table) {
-        event.preventDefault(); // Prevent default form submission behavior
+    function AddDriver(event, table) {
+        event.preventDefault();
+        const DriverForm = {
+            first_name: document.getElementById('driver_first_name').value,
+            middle_name: document.getElementById('driver_middle_name').value,
+            last_name: document.getElementById('driver_last_name').value,
+            dob: document.getElementById('driver_dob').value,
+            address_street: document.getElementById('driver_address_street').value,
+            address_zip: document.getElementById('driver_address_zip').value,
+            license_number: document.getElementById('driver_license_number').value
+        }
+        console.log(DriverForm);
 
-        // Extract the form data
-        const form = event.target.form;
-        console.log("form = " + form);
-        const formData = new FormData(form);
-        console.log("formData = " + formData);
-
-        formData.forEach((value, key) => {
-            // Log only specific key-value pairs
-            if (key === 'first_name' || key === 'last_name') {
-                console.log(`Entry Example = ${key}: ${value}`);
+        for (const key in DriverForm) {
+            if (!DriverForm[key]) {
+                alert('New entry contains empty field(s). All fields must contain a value.');
+                return;
             }
-        });
+        }
 
-        // form.json or something
-        // casting HTML instead of JSON
-
-        // Construct the data object
-        const data = {};
-        formData.forEach((value, key) => {
-            data[key] = value;
-        });
-
-        // Send the data to the backend endpoint for adding entry
         fetch(`http://localhost:3000/api/add-${table.toLowerCase()}`, { // Construct the endpoint dynamically based on the table name
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(data) // Pass the data directly without including the table name
+            body: JSON.stringify(DriverForm) // Pass the data directly without including the table name
         })
         .then(response => response.json())
         .then(result => {
-            // Display success message
-            resultsDisplay("Add Entry: Entry into ${table} successful");
             const successMessage = document.getElementById('successMessage');
             successMessage.textContent = result.message;
             successMessage.style.display = 'block';
+
+            document.getElementById('driver_first_name').value = '';
+            document.getElementById('driver_middle_name').value = '';
+            document.getElementById('driver_last_name').value = '';
+            document.getElementById('driver_dob').value = '';
+            document.getElementById('driver_address_street').value = '';
+            document.getElementById('driver_address_zip').value = '';
+            document.getElementById('driver_license_number').value = '';
             
-            form.reset();
+            fetchData(`http://localhost:3000/api/${table.toLowerCase()}`);
         })
         .catch(error => console.error('Error:', error));
     }
 
+    function AddVehicle(event, table) {
+        event.preventDefault();
+        const VehicleForm = {
+            start_miles: document.getElementById('vehicle_start_miles').value,
+            end_miles: document.getElementById('vehicle_end_miles').value,
+            start_fuel: document.getElementById('vehicle_start_fuel').value,
+            end_fuel: document.getElementById('vehicle_end_fuel').value,
+            start_condition: document.getElementById('vehicle_start_condition').value,
+            end_condition: document.getElementById('vehicle_end_condition').value,
+            issues: document.getElementById('vehicles_issues').value,
+            reason_for_trip: document.getElementById('vehicles_reason_for_trip').value
+        }
+        console.log(VehicleForm);
 
+        fetch(`http://localhost:3000/api/add-${table.toLowerCase()}`, { // Construct the endpoint dynamically based on the table name
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(VehicleForm) // Pass the data directly without including the table name
+        })
+        .then(response => response.json())
+        .then(result => {
+            const successMessage = document.getElementById('successMessage');
+            successMessage.textContent = result.message;
+            successMessage.style.display = 'block';
+
+            document.getElementById('vehicle_start_miles').value = '';
+            document.getElementById('vehicle_end_miles').value = '';
+            document.getElementById('vehicle_start_fuel').value = '';
+            document.getElementById('vehicle_end_fuel').value = '';
+            document.getElementById('vehicle_start_condition').value = '';
+            document.getElementById('vehicle_end_condition').value = '';
+            document.getElementById('vehicles_issues').value = '';
+            document.getElementById('vehicles_reason_for_trip').value = '';
+            
+            fetchData(`http://localhost:3000/api/${table.toLowerCase()}`);
+        })
+        .catch(error => console.error('Error:', error));
+    }
+
+    function AddPassenger(event, table) {
+        event.preventDefault();
+        const PassForm = {
+            first_name: document.getElementById('passenger_first_name').value,
+            middle_name: document.getElementById('passenger_middle_name').value,
+            last_name: document.getElementById('passenger_last_name').value,
+            dob: document.getElementById('passenger_dob').value,
+            address_street: document.getElementById('passenger_address_street').value,
+            address_zip: document.getElementById('passenger_address_zip').value
+        }
+        console.log(PassForm);
+
+        fetch(`http://localhost:3000/api/add-${table.toLowerCase()}`, { // Construct the endpoint dynamically based on the table name
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(PassForm) // Pass the data directly without including the table name
+        })
+        .then(response => response.json())
+        .then(result => {
+            const successMessage = document.getElementById('successMessage');
+            successMessage.textContent = result.message;
+            successMessage.style.display = 'block';
+
+            document.getElementById('passenger_first_name').value = '';
+            document.getElementById('passenger_middle_name').value = '';
+            document.getElementById('passenger_last_name').value = '';
+            document.getElementById('passenger_dob').value = '';
+            document.getElementById('passenger_address_street').value = '';
+            document.getElementById('passenger_address_zip').value = '';
+            
+            fetchData(`http://localhost:3000/api/${table.toLowerCase()}`);
+        })
+        .catch(error => console.error('Error:', error));
+    }
+
+    function AddTrip(event, table) {
+        event.preventDefault();
+        const TripForm = {
+            destination_address: document.getElementById('trip_start_miles').value,
+            destination_zip: document.getElementById('trip_end_miles').value,
+            to_date: document.getElementById('trip_start_fuel').value,
+            to_start_time: document.getElementById('trip_end_fuel').value,
+            to_arrival_time: document.getElementById('trip_start_condition').value,
+            back_date: document.getElementById('trip_end_condition').value,
+            back_start_time: document.getElementById('trip_issues').value,
+            back_arrival_time: document.getElementById('trip_reason_for_trip').value,
+            vehicle_id: document.getElementById('trip_vehicle_id').value,
+            driver_id: document.getElementById('trip_driver_id').value,
+            passenger_id: document.getElementById('trip_passenger_id').value
+        }
+        console.log(TripForm);
+
+        fetch(`http://localhost:3000/api/add-${table.toLowerCase()}`, { // Construct the endpoint dynamically based on the table name
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(TripForm) // Pass the data directly without including the table name
+        })
+        .then(response => response.json())
+        .then(result => {
+            const successMessage = document.getElementById('successMessage');
+            successMessage.textContent = result.message;
+            successMessage.style.display = 'block';
+
+            document.getElementById('trip_start_miles').value = '';
+            document.getElementById('trip_end_miles').value = '';
+            document.getElementById('trip_start_fuel').value = '';
+            document.getElementById('trip_end_fuel').value = '';
+            document.getElementById('trip_start_condition').value = '';
+            document.getElementById('trip_end_condition').value = '';
+            document.getElementById('trip_issues').value = '';
+            document.getElementById('trip_reason_for_trip').value = '';
+            document.getElementById('trip_vehicle_id').value = '';
+            document.getElementById('trip_driver_id').value = '';
+            document.getElementById('trip_passenger_id').value = '';
+
+            fetchData(`http://localhost:3000/api/${table.toLowerCase()}`);
+        })
+        .catch(error => console.error('Error:', error));
+    }
+   
     document.getElementById('add_submit_Drivers').addEventListener('click', function(event) {
         console.log("Add Driver has been clicked :D");
-        AddSubmit(event, 'Drivers');
+        AddDriver(event, 'Drivers');
     });
-    
     document.getElementById('add_submit_Vehicles').addEventListener('click', function(event) {
         console.log("Add Vehicle has been clicked :D");
-        AddSubmit(event, 'Vehicles');
+        AddVehicle(event, 'Vehicles');
     });
-    
     document.getElementById('add_submit_Passengers').addEventListener('click', function(event) {
         console.log("Add Passenger has been clicked :D");
-        AddSubmit(event, 'Passengers');
+        AddPassenger(event, "Passengers");
     });
-    
     document.getElementById('add_submit_Trips').addEventListener('click', function(event) {
         console.log("Add Trip has been clicked :D");
-        AddSubmit(event, 'Trips');
+        AddTrip(event, 'Trips');
     });
 
+    // REMOVE ENTRY
 
+    function deleteEntry(event) {
+        event.preventDefault();
 
+        const table = document.getElementById("delete_drop").value;
+        const id = document.getElementById("delete_id").value;
 
+        if (!id) {
+            window.alert("Please enter an ID to delete.");
+            return;
+        } else if (!/^\d+$/.test(id)) {
+            alert('Please enter a valid numerical ID number.');
+            return;
+        }
+
+        const confirmed = window.confirm(`Are you sure you want to delete entry with ID ${id} from ${table} table?`);
+        if (confirmed) {
+            fetch(`http://localhost:3000/api/delete-${table.toLowerCase()}/${id}`, {
+                method: "DELETE"
+            })
+            .then(response => response.json())
+            .then(result => {
+                // Display success message or handle any errors
+                console.log(result);
+                resultsDisplay(result.message);
+                document.getElementById("delete_id").value = "";
+                fetchData(`http://localhost:3000/api/${table.toLowerCase()}`);
+            })
+            .catch(error => console.error("Error:", error));
+        }
+    }
+
+    const deleteButton = document.getElementById("delete_submit");
+    deleteButton.addEventListener("click", deleteEntry);
+
+    // DISPLAY TABLE CONTENTS
 
     // For displaying tables below
     function fetchData(endpoint) {
@@ -182,10 +336,6 @@ document.addEventListener("DOMContentLoaded", function () {
             tableDisplay.innerHTML = '';
         }
     });
-
-
-
-
 
     //Create actual table data based on JSON data
     function createDriversTable(data) {

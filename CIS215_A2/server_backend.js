@@ -72,6 +72,8 @@ app.get('/api/trips', (req, res) => {
 
 app.post('/api/add-drivers', (req, res) => {
     const data = req.body;
+    console.log("Console logging");
+    console.log(data);
 
     const query = 'INSERT INTO Drivers (first_name, middle_name, last_name, dob, address_street, address_zip, license_number) VALUES (?, ?, ?, ?, ?, ?, ?)';
     const { first_name, middle_name, last_name, dob, address_street, address_zip, license_number } = data;
@@ -125,6 +127,56 @@ app.post('/api/add-trips', (req, res) => {
             return res.status(500).json({ error: err.message });
         }
         res.json({ message: 'Passenger added successfully', trip_id: this.lastID });
+    });
+});
+
+
+
+app.delete('/api/delete-drivers/:id', (req, res) => {
+    const id = req.params.id;
+    const query = 'DELETE FROM Drivers WHERE driver_id = ?';
+
+    db.run(query, [id], function(err) {
+        if (err) {
+            return res.status(500).json({ error: err.message });
+        }
+        res.json({ message: 'Driver deleted successfully' });
+    });
+});
+
+app.delete('/api/delete-vehicles/:id', (req, res) => {
+    const id = req.params.id;
+    const query = 'DELETE FROM Vehicles WHERE vehicle_id = ?';
+
+    db.run(query, [id], function(err) {
+        if (err) {
+            return res.status(500).json({ error: err.message });
+        }
+        res.json({ message: 'Vehicle deleted successfully' });
+    });
+});
+
+app.delete('/api/delete-passengers/:id', (req, res) => {
+    const id = req.params.id;
+    const query = 'DELETE FROM Passengers WHERE passenger_id = ?';
+
+    db.run(query, [id], function(err) {
+        if (err) {
+            return res.status(500).json({ error: err.message });
+        }
+        res.json({ message: 'Passenger deleted successfully' });
+    });
+});
+
+app.delete('/api/delete-trips/:id', (req, res) => {
+    const id = req.params.id;
+    const query = 'DELETE FROM Trips WHERE trip_id = ?';
+
+    db.run(query, [id], function(err) {
+        if (err) {
+            return res.status(500).json({ error: err.message });
+        }
+        res.json({ message: 'Trip deleted successfully' });
     });
 });
 
