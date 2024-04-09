@@ -91,9 +91,7 @@ document.addEventListener("DOMContentLoaded", function () {
         })
         .then(response => response.json())
         .then(result => {
-            const successMessage = document.getElementById('successMessage');
-            successMessage.textContent = result.message;
-            successMessage.style.display = 'block';
+            resultsDisplay("Drivers: New entry has been made successfully.");
 
             document.getElementById('driver_first_name').value = '';
             document.getElementById('driver_middle_name').value = '';
@@ -131,9 +129,7 @@ document.addEventListener("DOMContentLoaded", function () {
         })
         .then(response => response.json())
         .then(result => {
-            const successMessage = document.getElementById('successMessage');
-            successMessage.textContent = result.message;
-            successMessage.style.display = 'block';
+            resultsDisplay("Vehicles: New entry has been made successfully.");
 
             document.getElementById('vehicle_start_miles').value = '';
             document.getElementById('vehicle_end_miles').value = '';
@@ -170,9 +166,7 @@ document.addEventListener("DOMContentLoaded", function () {
         })
         .then(response => response.json())
         .then(result => {
-            const successMessage = document.getElementById('successMessage');
-            successMessage.textContent = result.message;
-            successMessage.style.display = 'block';
+            resultsDisplay("Passengers: New entry has been made successfully.");
 
             document.getElementById('passenger_first_name').value = '';
             document.getElementById('passenger_middle_name').value = '';
@@ -212,9 +206,7 @@ document.addEventListener("DOMContentLoaded", function () {
         })
         .then(response => response.json())
         .then(result => {
-            const successMessage = document.getElementById('successMessage');
-            successMessage.textContent = result.message;
-            successMessage.style.display = 'block';
+            resultsDisplay("Trips: New entry has been made successfully.");
 
             document.getElementById('trip_start_miles').value = '';
             document.getElementById('trip_end_miles').value = '';
@@ -228,11 +220,13 @@ document.addEventListener("DOMContentLoaded", function () {
             document.getElementById('trip_driver_id').value = '';
             document.getElementById('trip_passenger_id').value = '';
 
+            // "refreshes" table display after row is added
             fetchData(`http://localhost:3000/api/${table.toLowerCase()}`);
         })
         .catch(error => console.error('Error:', error));
     }
    
+    // Submit Add Button event handlers
     document.getElementById('add_submit_Drivers').addEventListener('click', function(event) {
         console.log("Add Driver has been clicked :D");
         AddDriver(event, 'Drivers');
@@ -250,6 +244,7 @@ document.addEventListener("DOMContentLoaded", function () {
         AddTrip(event, 'Trips');
     });
 
+
     // REMOVE ENTRY
     function deleteEntry(event) {
         event.preventDefault();
@@ -257,6 +252,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const table = document.getElementById("delete_drop").value;
         const id = document.getElementById("delete_id").value;
 
+        // syntax error checking
         if (!id) {
             window.alert("Please enter an ID to delete.");
             return;
@@ -272,10 +268,10 @@ document.addEventListener("DOMContentLoaded", function () {
             })
             .then(response => response.json())
             .then(result => {
-                // Display success message or handle any errors
                 console.log(result);
                 resultsDisplay(result.message);
                 document.getElementById("delete_id").value = "";
+                // "refreshes" table display after row is deleted
                 fetchData(`http://localhost:3000/api/${table.toLowerCase()}`);
             })
             .catch(error => console.error("Error:", error));
@@ -297,7 +293,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const contain = document.getElementById("query_contain").value;
     
         const queryData = { table, id, column, contain };
-    
+
         fetch(`http://localhost:3000/api/query`, {
             method: 'POST',
             headers: {
@@ -309,7 +305,8 @@ document.addEventListener("DOMContentLoaded", function () {
         .then(result => {
             // Process the query result
             console.log(result);
-            createDriversTable(result); // Pass the result directly to the function
+            // displays query results on page using createDriversTable()
+            createDriversTable(result);
             resultsDisplay("Query has been made successfully.");
         })
         .catch(error => console.error('Error:', error));
@@ -332,12 +329,11 @@ document.addEventListener("DOMContentLoaded", function () {
             createDriversTable(drivers);
         })
         .catch(error => {
-            console.error('Error fetching data:', error); // Handle any errors that occur during the fetch
+            console.error('Error fetching data:', error);
         });
     }
-
-
     
+    // default table display on page load
     fetchData('http://localhost:3000/api/drivers');
 
     var tablesDisplayDrop = document.getElementById("table_drop");
