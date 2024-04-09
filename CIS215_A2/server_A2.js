@@ -309,6 +309,7 @@ document.addEventListener("DOMContentLoaded", function () {
         .then(result => {
             // Process the query result
             console.log(result);
+            createDriversTable(result); // Pass the result directly to the function
             resultsDisplay("Query has been made successfully.");
         })
         .catch(error => console.error('Error:', error));

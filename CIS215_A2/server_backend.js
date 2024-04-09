@@ -186,7 +186,8 @@ app.post('/api/query', (req, res) => {
     const { table, id, column, contain } = req.body;
     const singularTableName = table.slice(0, -1);
 
-    let query = `SELECT * FROM ${table}`;
+    let query = `SELECT ${column} FROM ${table}`;
+
     let whereClause = '';
 
     if (id) {
@@ -194,11 +195,7 @@ app.post('/api/query', (req, res) => {
         whereClause += ` ${idColumnName} = ${id}`;
     }
     if (contain && !id) {
-        if (whereClause) {
-            whereClause += ` AND ${column} LIKE '%${contain}%'`;
-        } else {
-            whereClause += ` WHERE ${column} LIKE '%${contain}%'`;
-        }
+        whereClause += ` ${column} LIKE '%${contain}%'`;
     } else if (contain && id) {
         whereClause += ` AND ${column} LIKE '%${contain}%'`;
     }
@@ -214,7 +211,6 @@ app.post('/api/query', (req, res) => {
         res.json(rows);
     });
 });
-
 
 
 const PORT = 3000;
