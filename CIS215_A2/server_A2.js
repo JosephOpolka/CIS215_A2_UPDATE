@@ -62,7 +62,6 @@ document.addEventListener("DOMContentLoaded", function () {
     // BEGGINING OF DATA COLLECTION
 
     //ADD ENTRY
-
     function AddDriver(event, table) {
         event.preventDefault();
         const DriverForm = {
@@ -252,7 +251,6 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     // REMOVE ENTRY
-
     function deleteEntry(event) {
         event.preventDefault();
 
@@ -287,8 +285,38 @@ document.addEventListener("DOMContentLoaded", function () {
     const deleteButton = document.getElementById("delete_submit");
     deleteButton.addEventListener("click", deleteEntry);
 
-    // DISPLAY TABLE CONTENTS
 
+
+    // QUERYING DATABASE
+    document.getElementById("query_submit").addEventListener("click", function (event) {
+        event.preventDefault();
+    
+        const table = document.getElementById("query_drop").value;
+        const id = document.getElementById("query_id").value;
+        const column = document.getElementById(`query_column_${table}`).value;
+        const contain = document.getElementById("query_contain").value;
+    
+        const queryData = { table, id, column, contain };
+    
+        fetch(`http://localhost:3000/api/query`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(queryData)
+        })
+        .then(response => response.json())
+        .then(result => {
+            // Process the query result
+            console.log(result);
+            resultsDisplay("Query has been made successfully.");
+        })
+        .catch(error => console.error('Error:', error));
+    });
+
+
+
+    // DISPLAY TABLE CONTENTS
     // For displaying tables below
     function fetchData(endpoint) {
         return fetch(endpoint) // Make an HTTP GET request to the backend API endpoint
@@ -307,6 +335,8 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
+
+    
     fetchData('http://localhost:3000/api/drivers');
 
     var tablesDisplayDrop = document.getElementById("table_drop");

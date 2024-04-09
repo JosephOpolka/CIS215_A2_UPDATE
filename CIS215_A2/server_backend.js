@@ -182,6 +182,41 @@ app.delete('/api/delete-trips/:id', (req, res) => {
 
 
 
+app.post('/api/query', (req, res) => {
+    const { table, id, column, contain } = req.body;
+    const singularTableName = table.slice(0, -1);
+
+    let query = `SELECT * FROM ${table}`;
+    let whereClause = '';
+
+    if (id) {
+        const idColumnName = `${singularTableName}_id`;
+        whereClause += ` ${idColumnName} = ${id}`;
+    }
+    if (contain && !id) {
+        if (whereClause) {
+            whereClause += ` AND ${column} LIKE '%${contain}%'`;
+        } else {
+            whereClause += ` WHERE ${column} LIKE '%${contain}%'`;
+        }
+    } else if (contain && id) {
+        whereClause += ` AND ${column} LIKE '%${contain}%'`;
+    }
+
+    if (whereClause) {
+        query += ` WHERE${whereClause}`;
+    }
+
+    db.all(query, (err, rows) => {
+        if (err) {
+            return res.status(500).json({ error: err.message });
+        }
+        res.json(rows);
+    });
+});
+
+
+
 const PORT = 3000;
 // starts server
 app.listen(PORT, () => {
